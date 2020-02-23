@@ -3,14 +3,19 @@ import allCoupons from './allCoupons';
 
 class Coupons extends React.Component {
 
-
   claimCoupon(id) {
     console.log("Coupon claimed!" + id);
-}
+  }
 
   render() {
 
-    let rows = allCoupons.map(coupon => {
+    const burgers = Math.floor(this.props.clicks);
+
+    let filteredCoupons = allCoupons.filter(coupon =>
+        coupon.price <= burgers
+    );
+
+    let rows = filteredCoupons.map(coupon => {
       return (
         <div className="coupon" key={coupon.id}>
           <div className="coupon_offer">
@@ -39,7 +44,7 @@ class Coupons extends React.Component {
           <h1>Coupons</h1>
         </div>
         <div className="content">
-          {rows}
+          {rows.length > 0 ? rows : "No coupons to claim."}
         </div>
       </>  
     );
